@@ -5,10 +5,6 @@ namespace PetrKnap\Php\Image;
 /**
  * Class designed to simplify the image processing in PHP
  *
- * This class provides methods for loading, transforming, storing and displaying image data. The code is being developed
- * since 2008. If you need to add method for specific functionality, please send your proposal or modified source code
- * to "the developers e-mail":[mailto:dev%40petrknap%2Ecz?subject=Image%2Eclass%2Ephp].
- *
  * @author   Petr Knap <dev@petrknap.cz>
  * @since    2008-09-04
  * @category ImageProcessing
