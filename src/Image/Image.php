@@ -5,11 +5,11 @@ namespace PetrKnap\Php\Image;
 /**
  * Class designed to simplify the image processing in PHP
  *
- * @author   Petr Knap <dev@petrknap.cz>
- * @since    2008-09-04
- * @package  PetrKnap\Php\Image
- * @version  1.0.0
- * @license  https://github.com/petrknap/php-image/blob/master/LICENSE MIT
+ * @author  Petr Knap <dev@petrknap.cz>
+ * @since   2008-09-04
+ * @package PetrKnap\Php\Image
+ * @version 1.0.0
+ * @license https://github.com/petrknap/php-image/blob/master/LICENSE MIT
  */
 class Image
 {

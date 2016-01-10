@@ -70,7 +70,7 @@ trait ImageFactoriesTrait
      * Creates new Image object from image file
      *
      * @param string $pathToFile Path to image file
-     * @return self
+     * @return Image
      */
     public static function fromFile($pathToFile)
     {
@@ -85,7 +85,7 @@ trait ImageFactoriesTrait
      *
      * @param resource $resource Image resource
      * @throws ImageException
-     * @return self
+     * @return Image
      */
     public static function fromResource($resource)
     {
@@ -105,10 +105,10 @@ trait ImageFactoriesTrait
     /**
      * Creates copy of Image object
      *
-     * @param self $image Image object
-     * @return self
+     * @param Image $image Image object
+     * @return Image
      */
-    public static function fromImage(self $image)
+    public static function fromImage(Image $image)
     {
         /** @var Image $newImage */
         $newImage = clone $image;
