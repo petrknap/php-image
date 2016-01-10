@@ -38,7 +38,7 @@ trait ImageOutputTrait
                 header("Content-Type: image/png");
                 imagepng($this->resource);
                 break;
-            case Image::BMP:
+            case Image::WBMP:
                 header("Content-Type: image/wbmp");
                 imagewbmp($this->resource);
                 break;
@@ -74,7 +74,7 @@ trait ImageOutputTrait
             case Image::PNG:
                 imagepng($this->resource, $pathToFile);
                 break;
-            case Image::BMP:
+            case Image::WBMP:
                 imagewbmp($this->resource, $pathToFile);
                 break;
             default:

@@ -44,12 +44,12 @@ trait ImageFactoriesTrait
             case Image::PNG:
                 $this->resource = imagecreatefrompng($this->pathToFile);
                 break;
-            case Image::BMP:
+            case Image::WBMP:
                 $this->resource = imagecreatefromwbmp($this->pathToFile);
                 break;
             default:
                 throw new ImageException(
-                    "Unknown type of file " . ($this->pathToFile) . ".",
+                    "Unknown type '{$this->type}' of file '{$this->pathToFile}'.",
                     ImageException::UnsupportedFormatException
                 );
                 break;

@@ -43,7 +43,7 @@ class Image
         GIF = IMAGETYPE_GIF,
         JPG = IMAGETYPE_JPEG,
         PNG = IMAGETYPE_PNG,
-        BMP = IMAGETYPE_WBMP;
+        WBMP = IMAGETYPE_WBMP;
 
     /**
      * Creates empty instance
