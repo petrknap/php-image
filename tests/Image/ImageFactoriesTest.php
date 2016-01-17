@@ -1,14 +1,12 @@
 <?php
 
-namespace PetrKnap\Php\Image;
+namespace PetrKnap\Php\Image\Test;
 
-class ImageFactoriesTest extends \PHPUnit_Framework_TestCase
+use PetrKnap\Php\Image\Image;
+use PetrKnap\Php\Image\ImageException;
+
+class ImageFactoriesTest extends ImageTestCase
 {
-    /**
-     * @var string
-     */
-    private $pathToResources;
-
     /**
      * @var resource
      */
@@ -21,7 +19,6 @@ class ImageFactoriesTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->pathToResources = __DIR__ . "/ImageFactoriesTest";
         $this->imageResource = imagecreatetruecolor(2, 2);
         $this->nonImageResource = fopen("{$this->pathToResources}/image.txt", "r");
     }

@@ -30,7 +30,8 @@
   },
   "autoload": {
     "psr-4": {
-      "PetrKnap\\Php\\Image\\": "src/Image"
+      "PetrKnap\\Php\\Image\\": "src/Image",
+      "PetrKnap\\Php\\Image\\Test\\": "tests/Image"
     }
   }
 }
