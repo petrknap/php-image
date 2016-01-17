@@ -109,7 +109,7 @@ class ImageFactoriesTest extends ImageTestCase
         $this->assertEquals($anotherImage->getPathToFile(), $image->getPathToFile());
         $this->assertEquals($anotherImage->getWidth(), $image->getWidth());
         $this->assertEquals($anotherImage->getHeight(), $image->getHeight());
-        $this->assertEquals($anotherImage->getType(), $image->getTransparentColor());
+        $this->assertEquals($anotherImage->getType(), $image->getType());
         $this->assertEquals($anotherImage->getBackgroundColor(), $image->getBackgroundColor());
         $this->assertEquals($anotherImage->getTransparentColor(), $image->getTransparentColor());
         $this->assertEquals($anotherImage->getJpgQuality(), $image->getJpgQuality());
