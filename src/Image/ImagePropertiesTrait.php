@@ -16,7 +16,15 @@ trait ImagePropertiesTrait
     private $pathToFile;
     private $width;
     private $height;
+
+    /**
+     * @var ImageTypeEnum
+     */
     private $type;
+
+    /**
+     * @var resource
+     */
     private $resource;
     private $backgroundColor;
     private $transparentColor;

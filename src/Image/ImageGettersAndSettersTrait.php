@@ -15,6 +15,38 @@ trait ImageGettersAndSettersTrait
 {
     use ImagePropertiesTrait;
 
+    private static function ImageGettersAndSettersTrait_IsValidColor($color)
+    {
+        return is_integer($color) && $color >= 0x00000000 && $color <= 0xFFFFFFFF;
+    }
+
+    private static function ImageGettersAndSettersTrait_GetColorId($resource, $color)
+    {
+        if(!self::ImageGettersAndSettersTrait_IsValidColor($color)) {
+            throw new ImageException(
+                sprintf(
+                    ImageException::OUT_OF_RANGE_MESSAGE,
+                    "Input '{$color}'"
+                ),
+                ImageException::OUT_OF_RANGE
+            );
+        }
+        $colorIdentifier = imagecolorallocatealpha(
+            $resource,
+            ($color & 0xFF000000) >> 24,
+            ($color & 0x00FF0000) >> 16,
+            ($color & 0x0000FF00) >> 8,
+            ($color & 0x000000FF) >> 0
+        );
+        if($colorIdentifier === false) {
+            throw new ImageException(
+                "imagecolorallocatealpha for '{$color}' returned 'false'",
+                ImageException::GENERIC
+            );
+        }
+        return $colorIdentifier;
+    }
+
     /**
      * @return string Path to image file
      */
@@ -40,7 +72,7 @@ trait ImageGettersAndSettersTrait
     }
 
     /**
-     * @return int Type of image (constants GIF, JPG, PNG and BMP)
+     * @return ImageTypeEnum Type of image
      */
     public function getType()
     {
@@ -48,11 +80,11 @@ trait ImageGettersAndSettersTrait
     }
 
     /**
-     * @param int $type Type of image (constants GIF, JPG, PNG and BMP)
+     * @param ImageTypeEnum $type Type of image
      */
-    public function setType($type)
+    public function setType(ImageTypeEnum $type)
     {
-        $this->type = (int)$type;
+        $this->type = $type;
     }
 
     /**
@@ -85,14 +117,18 @@ trait ImageGettersAndSettersTrait
 
     /**
      * @param int $backgroundColor Background color in hexadecimal `0xAARRGGBB` (ARGB) format
+     * @throws ImageException
      */
     public function setBackgroundColor($backgroundColor)
     {
-        $this->backgroundColor = (int)$backgroundColor;
-        $tmpImage = imagecreatetruecolor($this->width, $this->height);
-        imagefilledrectangle($tmpImage, 0, 0, $this->width, $this->height, $this->backgroundColor);
-        imagecopy($tmpImage, $this->resource, 0, 0, 0, 0, $this->width, $this->height);
-        $this->resource = $tmpImage;
+        $resource = imagecreatetruecolor($this->width, $this->height);
+        imagefilledrectangle(
+            $resource, 0, 0, $this->width, $this->height,
+            self::ImageGettersAndSettersTrait_GetColorId($resource, $backgroundColor)
+        );
+        imagecopy($resource, $this->resource, 0, 0, 0, 0, $this->width, $this->height);
+        $this->resource = $resource;
+        $this->backgroundColor = $backgroundColor;
     }
 
     /**
@@ -104,12 +140,27 @@ trait ImageGettersAndSettersTrait
     }
 
     /**
-     * @param int $color Transparent color in hexadecimal `0xAARRGGBB` (ARGB) format
+     * @param int $transparentColor Transparent color in hexadecimal `0xAARRGGBB` (ARGB) format
+     * @throws ImageException
      */
-    public function setTransparent($color)
+    public function setTransparentColor($transparentColor)
     {
-        $this->transparentColor = $color;
-        imagecolortransparent($this->resource, (int)$this->transparentColor);
+        $transparentColorId = self::ImageGettersAndSettersTrait_GetColorId($this->resource, $transparentColor);
+        $identifierOfTransparentColor = imagecolortransparent(
+            $this->resource,
+            $transparentColorId
+        );
+        if($identifierOfTransparentColor !== $transparentColorId) {
+            throw new ImageException(
+                sprintf(
+                    "imagecolortransparent for '%s' returned '%s'",
+                    $transparentColorId,
+                    $identifierOfTransparentColor
+                ),
+                ImageException::GENERIC
+            );
+        }
+        $this->transparentColor = $transparentColor;
     }
 
     /**
@@ -128,8 +179,11 @@ trait ImageGettersAndSettersTrait
     {
         if ($jpgQuality < 1 || $jpgQuality > 100) {
             throw new ImageException(
-                "Value must be between 1 and 100.",
-                ImageException::OutOfRangeException
+                sprintf(
+                    ImageException::OUT_OF_RANGE_MESSAGE,
+                    "Input '{$jpgQuality}'"
+                ),
+                ImageException::OUT_OF_RANGE
             );
         }
         $this->jpgQuality = (int)$jpgQuality;

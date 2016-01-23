@@ -37,15 +37,6 @@ class Image
         RIGHT_BOTTOM = 9;
 
     /**
-     * @const int Image types
-     */
-    const
-        GIF = IMAGETYPE_GIF,
-        JPG = IMAGETYPE_JPEG,
-        PNG = IMAGETYPE_PNG,
-        WBMP = IMAGETYPE_WBMP;
-
-    /**
      * Creates empty instance
      */
     private function __construct()

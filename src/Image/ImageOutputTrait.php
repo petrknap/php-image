@@ -26,26 +26,29 @@ trait ImageOutputTrait
     public function show()
     {
         switch ($this->type) {
-            case Image::GIF:
+            case ImageTypeEnum::GIF():
                 header("Content-Type: image/gif");
                 imagegif($this->resource);
                 break;
-            case Image::JPG:
+            case ImageTypeEnum::JPG():
                 header("Content-Type: image/jpeg");
                 imagejpeg($this->resource, null, $this->jpgQuality);
                 break;
-            case Image::PNG:
+            case ImageTypeEnum::PNG():
                 header("Content-Type: image/png");
                 imagepng($this->resource);
                 break;
-            case Image::WBMP:
+            case ImageTypeEnum::WBMP():
                 header("Content-Type: image/wbmp");
                 imagewbmp($this->resource);
                 break;
             default:
                 throw new ImageException(
-                    "Unknown type of file {$this->pathToFile}.",
-                    ImageException::UnsupportedFormatException
+                    sprintf(
+                        ImageException::UNSUPPORTED_MESSAGE,
+                        "Type {$this->type->getKey()}"
+                    ),
+                    ImageException::UNSUPPORTED
                 );
                 break;
         }
@@ -65,22 +68,25 @@ trait ImageOutputTrait
         if ($type === null) $type = $this->type;
         if ($jpgQuality === null) $jpgQuality = $this->jpgQuality;
         switch ($type) {
-            case Image::GIF:
+            case ImageTypeEnum::GIF():
                 imagegif($this->resource, $pathToFile);
                 break;
-            case Image::JPG:
+            case ImageTypeEnum::JPG():
                 imagejpeg($this->resource, $pathToFile, $jpgQuality);
                 break;
-            case Image::PNG:
+            case ImageTypeEnum::PNG():
                 imagepng($this->resource, $pathToFile);
                 break;
-            case Image::WBMP:
+            case ImageTypeEnum::WBMP():
                 imagewbmp($this->resource, $pathToFile);
                 break;
             default:
                 throw new ImageException(
-                    "Unknown type of file '{$this->pathToFile}'.",
-                    ImageException::UnsupportedFormatException
+                    sprintf(
+                        ImageException::UNSUPPORTED_MESSAGE,
+                        "Type {$this->type->getKey()}"
+                    ),
+                    ImageException::UNSUPPORTED
                 );
                 break;
         }

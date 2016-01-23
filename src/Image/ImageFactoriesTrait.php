@@ -26,31 +26,41 @@ trait ImageFactoriesTrait
         $this->pathToFile = $pathToFile;
         if (!file_exists($this->pathToFile)) {
             throw new ImageException(
-                "File '{$this->pathToFile}' not found.",
-                ImageException::AccessException
+                sprintf(
+                    ImageException::ACCESS_MESSAGE,
+                    "File '{$this->pathToFile}'"
+                ),
+                ImageException::ACCESS
             );
         }
         $tmpImageSize = getimagesize($this->pathToFile);
         $this->width = (int)$tmpImageSize[0];
         $this->height = (int)$tmpImageSize[1];
-        $this->type = (int)$tmpImageSize[2];
-        switch ($this->type) {
-            case Image::GIF:
+        $type = (int)$tmpImageSize[2];
+        switch ($type) {
+            case ImageTypeEnum::GIF()->getValue():
+                $this->type = ImageTypeEnum::GIF();
                 $this->resource = imagecreatefromgif($this->pathToFile);
                 break;
-            case Image::JPG:
+            case ImageTypeEnum::JPG()->getValue():
+                $this->type = ImageTypeEnum::JPG();
                 $this->resource = imagecreatefromjpeg($this->pathToFile);
                 break;
-            case Image::PNG:
+            case ImageTypeEnum::PNG()->getValue():
+                $this->type = ImageTypeEnum::PNG();
                 $this->resource = imagecreatefrompng($this->pathToFile);
                 break;
-            case Image::WBMP:
+            case ImageTypeEnum::WBMP()->getValue():
+                $this->type = ImageTypeEnum::WBMP();
                 $this->resource = imagecreatefromwbmp($this->pathToFile);
                 break;
             default:
                 throw new ImageException(
-                    "Unknown type '{$this->type}' of file '{$this->pathToFile}'.",
-                    ImageException::UnsupportedFormatException
+                    sprintf(
+                        ImageException::UNSUPPORTED_MESSAGE,
+                        "Type '{$this->type}' of file '{$this->pathToFile}'"
+                    ),
+                    ImageException::UNSUPPORTED
                 );
                 break;
         }
@@ -96,8 +106,9 @@ trait ImageFactoriesTrait
         } catch (\Exception $exception) {
             throw new ImageException(
                 $exception->getMessage(),
-                ImageException::UnsupportedFormatException,
-                $exception);
+                ImageException::UNSUPPORTED,
+                $exception
+            );
         }
         return $newImage;
     }

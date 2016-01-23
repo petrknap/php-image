@@ -4,6 +4,7 @@ namespace PetrKnap\Php\Image\Test;
 
 use PetrKnap\Php\Image\Image;
 use PetrKnap\Php\Image\ImageException;
+use PetrKnap\Php\Image\ImageTypeEnum;
 
 class ImageFactoriesTest extends ImageTestCase
 {
@@ -33,19 +34,19 @@ class ImageFactoriesTest extends ImageTestCase
     {
         return [
             "GIF" => [
-                Image::GIF,
+                ImageTypeEnum::GIF(),
                 "gif"
             ],
             "JPG" => [
-                Image::JPG,
+                ImageTypeEnum::JPG(),
                 "jpg"
             ],
             "PNG" => [
-                Image::PNG,
+                ImageTypeEnum::PNG(),
                 "png"
             ],
             "WBMP" => [
-                Image::WBMP,
+                ImageTypeEnum::WBMP(),
                 "wbmp"
             ]
         ];
@@ -76,7 +77,7 @@ class ImageFactoriesTest extends ImageTestCase
         $this->setExpectedException(
             get_class(new ImageException()),
             "",
-            ImageException::UnsupportedFormatException
+            ImageException::UNSUPPORTED
         );
 
         Image::fromFile("{$this->pathToResources}/image.txt");
@@ -90,7 +91,7 @@ class ImageFactoriesTest extends ImageTestCase
         $this->setExpectedException(
             get_class(new ImageException()),
             "",
-            ImageException::AccessException
+            ImageException::ACCESS
         );
 
         Image::fromFile("{$this->pathToResources}/image.not_found");
@@ -134,7 +135,7 @@ class ImageFactoriesTest extends ImageTestCase
         $this->setExpectedException(
             get_class(new ImageException()),
             "",
-            ImageException::UnsupportedFormatException
+            ImageException::UNSUPPORTED
         );
 
         Image::fromResource($this->nonImageResource);
