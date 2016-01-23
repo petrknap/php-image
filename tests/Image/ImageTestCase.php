@@ -6,6 +6,8 @@ use PetrKnap\Php\Image\Image;
 
 abstract class ImageTestCase extends \PHPUnit_Framework_TestCase
 {
+    const SKIPPED_NOT_FOR_PUBLIC_USE = "Not for public use";
+
     /**
      * @var string
      */

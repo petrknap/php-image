@@ -31,13 +31,14 @@ trait ImageGettersAndSettersTrait
                 ImageException::OUT_OF_RANGE
             );
         }
-        $colorIdentifier = imagecolorallocatealpha(
-            $resource,
-            ($color & 0xFF000000) >> 24,
-            ($color & 0x00FF0000) >> 16,
-            ($color & 0x0000FF00) >> 8,
-            ($color & 0x000000FF) >> 0
-        );
+
+        $alpha = ($color & 0xFF000000) >> 24;
+        $red = ($color & 0x00FF0000) >> 16;
+        $green = ($color & 0x0000FF00) >> 8;
+        $blue = ($color & 0x000000FF) >> 0;
+
+        $colorIdentifier = imagecolorallocatealpha($resource, $red, $green, $blue, $alpha);
+
         if($colorIdentifier === false) {
             throw new ImageException(
                 "imagecolorallocatealpha for '{$color}' returned 'false'",
