@@ -23,20 +23,6 @@ class Image
     use ImageOutputTrait;
 
     /**
-     * @const int Positions
-     */
-    const
-        LEFT_TOP = 1,
-        CENTER_TOP = 2,
-        RIGHT_TOP = 3,
-        LEFT_CENTER = 4,
-        CENTER_CENTER = 5,
-        RIGHT_CENTER = 6,
-        LEFT_BOTTOM = 7,
-        CENTER_BOTTOM = 8,
-        RIGHT_BOTTOM = 9;
-
-    /**
      * Creates empty instance
      */
     private function __construct()
